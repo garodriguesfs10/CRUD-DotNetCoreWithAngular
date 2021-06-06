@@ -1,4 +1,4 @@
-# Simples CRUD com .Net Core + Angular + EF Core
+# CRUD com .Net Core + Angular + EF Core
 
 Aplicação utilizando Entity Framework com banco local SqlServer
 
