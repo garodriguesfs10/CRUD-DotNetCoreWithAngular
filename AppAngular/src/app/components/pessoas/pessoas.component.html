@@ -1,0 +1,149 @@
+<div class="container border border-light rounded p-5 shadow">
+  <div class="text-center">
+    <h1>Crud .NET Core + Angular</h1>
+    <small>Gabriel Rodrigues</small>
+  </div>
+</div>
+
+<div
+  class="container p-5 border border-light rounded p-5 shadow"
+  *ngIf="visibilidadeTabela"
+>
+  <button
+    type="button"
+    class="btn btn-sm btn-secondary"
+    (click)="ExibirFormularioCadastro()"
+  >
+    Nova Pessoa
+  </button>
+  <hr />
+
+  <table class="table table-striped" *ngIf="pessoas.length > 0">
+    <thead>
+      <th>Nome</th>
+      <th>Sobrenome</th>
+      <th>Idade</th>
+      <th>Profissão</th>
+      <th>Ações</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pessoa of pessoas">
+        <td>{{ pessoa.nome }}</td>
+        <td>{{ pessoa.sobrenome }}</td>
+        <td>{{ pessoa.idade }}</td>
+        <td>{{ pessoa.profissao }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            (click)="ExibirFormAtualizacao(pessoa.id)"
+          >
+            Atualizar
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            style="margin-left: 5px"
+            (click)="
+              ExibirConfirmacaoExclusao(pessoa.id, pessoa.nome, conteudoModal)
+            "
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container p-5" *ngIf="visibilidadeForm">
+  <div class="row">
+    <div
+      class="col-6 border border-light rounded p-5 shadow"
+      *ngIf="formulario"
+    >
+      <h6>{{ tituloFormulario }}</h6>
+      <hr />
+      <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
+        <div class="form-group">
+          <label>Nome</label>
+          <input
+            type="text"
+            class="form-control form-control sm"
+            formControlName="nome"
+          />
+        </div>
+        <div class="form-group">
+          <label>Sobrenome</label>
+          <input
+            type="text"
+            class="form-control form-control sm"
+            formControlName="sobrenome"
+          />
+        </div>
+        <div class="form-group">
+          <label>Idade</label>
+          <input
+            type="number"
+            class="form-control form-control sm"
+            formControlName="idade"
+          />
+        </div>
+        <div class="form-group">
+          <label>Profissão</label>
+          <input
+            type="text"
+            class="form-control form-control sm"
+            formControlName="profissao"
+          />
+        </div>
+        <input
+          type="hidden"
+          class="form-control form-control sm"
+          formControlName="id"
+        />
+
+        <div class="d-grid gap-2 d-md-block" style="margin-top: 15px">
+          <button type="submit" class="btn btn-outline-primary">Salvar</button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            style="margin-left: 15px"
+            (click)="Voltar()"
+          >
+            Voltar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #conteudoModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Confirme para continuar</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>Prosseguir com a exclusão de {{ nomePessoa }} ?</h3>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="modalRef.hide()">
+      Não
+    </button>
+    <button
+      class="btn btn-sm btn-danger"
+      data-dismiss="modal"
+      (click)="ExcluirPessoa(pessoaid)"
+    >
+      Sim
+    </button>
+  </div>
+</ng-template>
